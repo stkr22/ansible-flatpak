@@ -1,0 +1,16 @@
+---
+- name: Add the flathub flatpak repository remote to the user installation.
+  community.general.flatpak_remote:
+    name: "{{ flatpak_repo.name }}"
+    state: present
+    flatpakrepo_url: "{{ flatpak_repo.url }}"
+    method: user
+  loop: "{{ flatpak_repos }}"
+  loop_control:
+    loop_var: flatpak_repo
+
+- name: Install flatpaks.
+  community.general.flatpak:
+    name: "{{ flatpak_installs }}"
+    state: present
+    method: user
